@@ -12,6 +12,7 @@ import React, { PropTypes } from 'react';
 import cx from 'classnames';
 import Header from './Header';
 import Footer from '../Footer';
+import RuleTable from '../RuleTable';
 import s from './Layout.css';
 
 class Layout extends React.Component {

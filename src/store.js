@@ -10,15 +10,19 @@
 
 import { createStore } from 'redux';
 
+const queryExists = window.location.search !== '';
+
+console.log(queryExists)
+
 // Centralized application state
 // For more information visit http://redux.js.org/
-const initialState = { count: 0 };
+const initialState = { editing: !queryExists };
 
 const store = createStore((state = initialState, action) => {
-  // TODO: Add action handlers (aka "reducers")
   switch (action.type) {
-    case 'COUNT':
-      return { ...state, count: (state.count) + 1 };
+    case 'CHANGE_MODE':
+      console.log('mode changed')
+      return { ...state, editing: !(state.editing) };
     default:
       return state;
   }

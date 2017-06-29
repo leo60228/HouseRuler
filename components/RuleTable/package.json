@@ -1,0 +1,6 @@
+{
+  "name": "RuleTable",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./RuleTable.js"
+}

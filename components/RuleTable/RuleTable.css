@@ -1,0 +1,4 @@
+.editableCell:empty:not(:focus):before{
+  content: attr(data-ph);
+  color: grey;
+}

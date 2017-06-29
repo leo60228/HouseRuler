@@ -10,6 +10,23 @@
 
 import React from 'react';
 import Link from '../Link';
+import { connect } from 'react-redux';
+
+const mapStateToProps = state => {
+  return {
+    editing: state.editing
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    changeMode: id => {
+      dispatch({
+        type: 'CHANGE_MODE'
+      })
+    }
+  }
+}
 
 class Navigation extends React.Component {
 
@@ -24,6 +41,7 @@ class Navigation extends React.Component {
   render() {
     return (
       <nav className="mdl-navigation" ref={node => (this.root = node)}>
+        <span className="mdl-navigation__link" onClick={this.props.changeMode}>{this.props.editing ? "💾 Save" : "✎ Edit"}</span>
         <Link className="mdl-navigation__link" to="/">Home</Link>
         <Link className="mdl-navigation__link" to="/about">About</Link>
       </nav>
@@ -32,4 +50,4 @@ class Navigation extends React.Component {
 
 }
 
-export default Navigation;
+export default connect(mapStateToProps, mapDispatchToProps)(Navigation);
