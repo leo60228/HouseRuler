@@ -89,7 +89,7 @@ class RuleTable extends React.PureComponent {
   }
 
   renderEditable (defaultValue = '') {
-    return (cellInfo) => this.props.editing ? (<div><div style={{ backgroundColor: '#fafafa' }} data-ph={defaultValue} className={s.editableCell} contentEditable suppressContentEditableWarning onBlur={(e) => {
+    return (cellInfo) => this.props.editing ? (<div><div style={{ backgroundColor: '#fafafa' }} data-ph={defaultValue} className={`${s.editableCell} ${s.tableCell}`} contentEditable suppressContentEditableWarning onBlur={(e) => {
       const data = [...this.state.data]
       data[cellInfo.index][cellInfo.column.id] = e.target.textContent
       const rows = () => {
@@ -104,7 +104,7 @@ class RuleTable extends React.PureComponent {
       }
       rows()
       this.setState({data: data})
-    }}>{this.state.data[cellInfo.index][cellInfo.column.id]}</div></div>) : (<div><Linkify>{this.state.data[cellInfo.index][cellInfo.column.id]}</Linkify></div>) 
+    }}>{this.state.data[cellInfo.index][cellInfo.column.id]}</div></div>) : (<div><Linkify className={s.tableCell}>{this.state.data[cellInfo.index][cellInfo.column.id]}</Linkify></div>) 
   }
 
   render () {

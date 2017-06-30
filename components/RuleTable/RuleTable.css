@@ -2,3 +2,7 @@
   content: attr(data-ph);
   color: grey;
 }
+
+.tableCell {
+  white-space: normal;
+}
