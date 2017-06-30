@@ -25,6 +25,27 @@ const mapStateToProps = state => {
   }
 }
 
+function encode(data) {
+  let arr = []
+  
+  data.forEach(e => {
+    arr.push(e.name)
+    arr.push(e.location)
+  })
+
+  return arr.join('\u0000')
+}
+
+function decode(data) {
+  let arr = data.split(/\u0000/g)
+
+  arr.forEach((e,i,a) => {if (i % 2 === 0) a[i/2]={name: e, location: a[i+1]}})
+
+  arr.splice((arr.length - 1) / 2 + 1)
+
+  return arr
+}
+
 class RuleTable extends React.PureComponent {
   static defaultState = {
     data: [
@@ -40,8 +61,24 @@ class RuleTable extends React.PureComponent {
 
     this.state = {}
     Object.assign(this.state, props)
-    this.state.data = props.data ? JSON.parse(props.data) : RuleTable.defaultState.data
-    
+    let data = props.data ? decode(props.data) : RuleTable.defaultState.data
+
+    const rows = () => {
+      const last = data[data.length-2]
+      const secondLast = data[data.length-3]
+      if (last.name !== '' || last.location !== '') {
+        data.push({name: '', location: ''})
+      } else if (typeof secondLast !== 'undefined' && secondLast.name == '' && secondLast.location == '') {
+        data.pop()
+        rows()
+      }
+    }
+
+    rows()
+    rows()
+
+    this.state.data = data
+
     this.state.columns = [
       {
         Header: 'Ruleset Name',
@@ -66,7 +103,7 @@ class RuleTable extends React.PureComponent {
 
   componentWillReceiveProps (nextProps) {
     if (!nextProps.editing && this.props.editing) {
-      this.state.onChangeData(JSON.stringify(this.state.data))
+      this.state.onChangeData(encode(this.state.data))
     }
     
     const columns = [...this.state.columns]
