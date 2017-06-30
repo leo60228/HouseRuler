@@ -33,11 +33,11 @@ function encode(data) {
     arr.push(e.location)
   })
 
-  return arr.join('%00')
+  return arr.join('%00sp%00')
 }
 
 function decode(data) {
-  let arr = data.split('%2500')
+  let arr = data.split('%00sp%00')
 
   arr.forEach((e,i,a) => {if (i % 2 === 0) a[i/2]={name: e, location: a[i+1]}})
 
